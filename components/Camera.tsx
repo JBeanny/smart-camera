@@ -80,7 +80,7 @@ export const Camera= () => {
     }
 
     return (
-        <div className="flex justify-center items-center flex-col h-screen gap-4 w-[80%] m-auto">
+        <div className="flex justify-center items-center flex-col gap-4 w-[80%] m-auto">
             <h1 className="text-center">{cameraOpen}</h1>
             <video ref={videoRef} autoPlay className={`w-${videoDimensions.width} h-${videoDimensions.height} border-2 border-white rounded-lg object-cover`}></video>
 
@@ -99,9 +99,9 @@ export const Camera= () => {
 
             {/* image preview */}
             {photo && (
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 w-full h-full">
                     <h2 className="text-center">Preview</h2>
-                    <img src={photo} alt="Captured" className={`w-full border-2 border-white rounded-lg object-contain`}/>
+                    <img src={photo} alt="Captured" className={`w-full h-full border-2 border-white rounded-lg object-contain`}/>
                 </div>
             )}
             <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
