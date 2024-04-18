@@ -1,9 +1,11 @@
 "use client"
 
-import { useState, useEffect, useRef, MutableRefObject } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export const Camera= () => {
     const [photo, setPhoto] = useState(null);
+    const [videoStream, setVideoStream] = useState<MediaStream | null>(null);
+    const [facingMode, setFacingMode] = useState('user');
     const [videoDimensions, setVideoDimensions] = useState({ width: 'auto', height: 'auto' });
     const [cameraOpen,setCameraOpen] = useState("Camera is not accessible. Please enable or wait 😕");
     const videoRef = useRef<HTMLVideoElement | any>();
@@ -12,7 +14,9 @@ export const Camera= () => {
     useEffect(() => {
         // access device camera
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({ video: true })
+            navigator.mediaDevices.getUserMedia({ video: {
+                facingMode: 'environment' // Use the back camera
+            }})
             .then(function(stream) {
                 if(videoRef.current === undefined) return;
 
@@ -24,6 +28,28 @@ export const Camera= () => {
             });
         }
     }, []);
+
+    useEffect(() => {
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            const constraints = {
+                video: {
+                    facingMode: facingMode
+                }
+            };
+
+            navigator.mediaDevices.getUserMedia(constraints)
+            .then(function(stream) {
+                if(videoRef.current === undefined) return;
+
+                videoRef.current.srcObject = stream;
+                setVideoStream(stream);
+                setCameraOpen("Enjoy taking photos 😊");
+            })
+            .catch(function(err) {
+                console.log("An error occurred: " + err);
+            });
+        }
+    }, [facingMode]);
 
     const takePhoto = () => {
         if(canvasRef.current === undefined) return;
@@ -53,6 +79,16 @@ export const Camera= () => {
         }
     };
 
+    const toggleCamera = () => {
+        if(videoStream == null) return;
+
+        // Stop current video stream
+        videoStream.getTracks().forEach(track => track.stop());
+
+        // Toggle facing mode
+        setFacingMode(facingMode === 'user' ? 'environment' : 'user');
+    };
+
     const discardPhoto = () => {
         setPhoto(null);
         setVideoDimensions({
@@ -67,6 +103,7 @@ export const Camera= () => {
             <video ref={videoRef} autoPlay className={`w-${videoDimensions.width} h-${videoDimensions.height} border-2 border-white rounded-lg`}></video>
 
             <div className="w-full flex flex-col justify-between gap-4">
+                <button onClick={toggleCamera} className="bg-white text-gray p-4 rounded-lg">Rotate Camera</button>
                 <button onClick={takePhoto} className="bg-white text-gray p-4 rounded-lg">Take Photo 📸</button>
                 {
                     photo &&  (
@@ -82,7 +119,7 @@ export const Camera= () => {
             {photo && (
                 <div className="flex flex-col gap-2">
                     <h2 className="text-center">Preview</h2>
-                    <img src={photo} alt="Captured" className={`w-${videoDimensions.width} h-${videoDimensions.height} border-2 border-white rounded-lg`}/>
+                    <img src={photo} alt="Captured" className={`border-2 border-white rounded-lg`}/>
                 </div>
             )}
             <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
