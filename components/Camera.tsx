@@ -12,24 +12,6 @@ export const Camera= () => {
     const canvasRef = useRef<HTMLCanvasElement | any>();
 
     useEffect(() => {
-        // access device camera
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({ video: {
-                facingMode: 'environment' // Use the back camera
-            }})
-            .then(function(stream) {
-                if(videoRef.current === undefined) return;
-
-                videoRef.current.srcObject = stream;
-                setCameraOpen("Enjoy taking photos 😊");
-            })
-            .catch(function(err) {
-                console.log("An error occurred: " + err);
-            });
-        }
-    }, []);
-
-    useEffect(() => {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             const constraints = {
                 video: {
