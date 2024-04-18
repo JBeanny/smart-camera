@@ -43,10 +43,10 @@ export const Camera= () => {
         setPhoto(dataURL);
         
         // set size according to the taken photo
-        // setVideoDimensions({
-        //     width: canvas.width,
-        //     height: canvas.height
-        // });
+        setVideoDimensions({
+            width: canvas.width,
+            height: canvas.height
+        });
     };
 
     const downloadPhoto = () => {
@@ -82,7 +82,7 @@ export const Camera= () => {
     return (
         <div className="flex justify-center items-center flex-col gap-4 w-[80%] m-auto">
             <h1 className="text-center">{cameraOpen}</h1>
-            <video ref={videoRef} autoPlay className={`w-${videoDimensions.width} h-${videoDimensions.height} ${facingMode === 'environment' ? 'scaleX(-1)' : 'none'} border-2 border-white rounded-lg object-cover trans`}></video>
+            <video ref={videoRef} autoPlay className={`w-${videoDimensions.width} h-${videoDimensions.height} ${facingMode === 'user' ? 'scaleX(-1)' : 'none'} border-2 border-white rounded-lg object-cover`}></video>
 
             <div className="w-full flex flex-col justify-between gap-4">
                 <button onClick={toggleCamera} className="bg-white text-gray p-4 rounded-lg">Rotate Camera</button>
@@ -99,7 +99,7 @@ export const Camera= () => {
 
             {/* image preview */}
             {photo && (
-                <img src={photo} alt="Captured" className="border-2 border-white rounded-lg object-contain"/>
+                <img src={photo} alt="Captured" className={`w-${videoDimensions.width} h-${videoDimensions.height} border-2 border-white rounded-lg object-contain`}/>
             )}
             <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
         </div>
