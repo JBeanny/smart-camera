@@ -43,10 +43,10 @@ export const Camera= () => {
         setPhoto(dataURL);
         
         // set size according to the taken photo
-        setVideoDimensions({
-            width: canvas.width,
-            height: canvas.height
-        });
+        // setVideoDimensions({
+        //     width: canvas.width,
+        //     height: canvas.height
+        // });
     };
 
     const downloadPhoto = () => {
