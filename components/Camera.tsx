@@ -10,7 +10,7 @@ export const Camera = () => {
   const [photo, setPhoto] = useState(null);
   const [videoStream, setVideoStream] = useState<MediaStream | null>(null);
   const [facingMode, setFacingMode] = useState("user");
-  const [lensMode, setLensMode] = useState<string>("none");
+  const [lensMode, setLensMode] = useState<string>("x1");
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [videoDimensions, setVideoDimensions] = useState({
     width: "auto",
@@ -24,19 +24,11 @@ export const Camera = () => {
 
   useEffect(() => {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      // const constraints = {
-      //   video: {
-      //     facingMode: facingMode,
-      //     zoom: {
-      //       ideal: getLensMode(),
-      //     },
-      //   },
-      // };
       const constraints = {
         video: {
           facingMode: facingMode,
           zoom: {
-            ideal: 1,
+            ideal: getLensMode(),
           },
         },
       };
@@ -58,7 +50,7 @@ export const Camera = () => {
   }, [facingMode, lensMode]);
 
   const getLensMode = () => {
-    return lensMode === "x0.5" ? "none" : lensMode === "x2" ? 2 : 1;
+    return lensMode === "x0.5" ? 0.5 : lensMode === "x2" ? 2 : 1;
   };
 
   return (

@@ -71,7 +71,7 @@ const toggleCamera = ({
   // Stop current video stream
   videoStream.getTracks().forEach((track) => track.stop());
 
-  setLensMode("none");
+  setLensMode("x0.5");
 
   // Toggle facing mode
   setFacingMode(facingMode === "user" ? "environment" : "user");
