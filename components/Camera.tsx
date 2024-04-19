@@ -50,7 +50,11 @@ export const Camera = () => {
   }, [facingMode, lensMode]);
 
   const getLensMode = () => {
-    return lensMode === "x0.5" ? "none" : lensMode === "x2" ? 2 : 1;
+    return facingMode === "environment" && lensMode === "x0.5"
+      ? "none"
+      : lensMode === "x2"
+      ? 2
+      : 1;
   };
 
   return (
@@ -68,7 +72,7 @@ export const Camera = () => {
 
       <Loading loading={isLoading} />
 
-      <div className="flex flex-col gap-4 justify-between items-center mt-20 h-2/3">
+      <div className="flex flex-col gap-4 justify-between items-center h-2/3">
         <video
           ref={videoRef}
           autoPlay
@@ -78,7 +82,7 @@ export const Camera = () => {
             isLoading ? "scale-0" : "scale-100 duration-300 ease-linear"
           }`}></video>
 
-        <div className="w-full flex flex-col justify-center items-center gap-4 fixed bottom-[40px]">
+        <div className="w-full flex flex-col justify-center items-center gap-4 fixed bottom-[30px]">
           <div className="flex gap-4 justify-center items-center">
             <Button
               onClick={() =>
