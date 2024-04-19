@@ -7,6 +7,7 @@ export interface ITakePhoto {
 
 export interface IToggleCamera {
   videoStream: MediaStream | null;
+  setVideoStream: (args: any) => void;
   setFacingMode: (args: string) => void;
   facingMode: string;
   setLensMode: (args: string) => void;

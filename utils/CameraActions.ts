@@ -62,6 +62,7 @@ const downloadPhoto = ({ photo }: { photo: any }) => {
 
 const toggleCamera = ({
   videoStream,
+  setVideoStream,
   setFacingMode,
   facingMode,
   setLensMode,
@@ -72,6 +73,7 @@ const toggleCamera = ({
   videoStream.getTracks().forEach((track) => track.stop());
 
   setLensMode("none");
+  setVideoStream(null);
 
   // Toggle facing mode
   setFacingMode(facingMode === "user" ? "environment" : "user");
