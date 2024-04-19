@@ -5,6 +5,7 @@ import { camera } from "@/utils";
 
 interface IImagePreview {
   photo: any;
+  blob: any;
   width: string;
   height: string;
   setPhoto: (args: any) => void;
@@ -13,6 +14,7 @@ interface IImagePreview {
 
 export const CustomDialog = ({
   photo,
+  blob,
   width,
   height,
   setPhoto,
@@ -37,7 +39,8 @@ export const CustomDialog = ({
                 enterTo="opacity-100 scale-100"
                 leave="ease-in duration-200"
                 leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95">
+                leaveTo="opacity-0 scale-95"
+              >
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <div className="mt-2">
                     {photo && (
@@ -52,7 +55,7 @@ export const CustomDialog = ({
                   <div className="mt-4 flex flex-col gap-2">
                     <Button
                       onClick={() => {
-                        camera.downloadPhoto({ photo });
+                        camera.downloadPhoto({ photo: blob });
                         toggleModal();
                       }}
                       disable={!photo}
