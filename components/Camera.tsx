@@ -40,7 +40,7 @@ export const Camera = () => {
 
           videoRef.current.srcObject = stream;
           setVideoStream(stream);
-          setCameraOpen("Enjoy taking photos 😊");
+          setCameraOpen("");
           setIsLoading(false);
         })
         .catch(function (err) {
@@ -50,11 +50,7 @@ export const Camera = () => {
   }, [facingMode, lensMode]);
 
   const getLensMode = () => {
-    return facingMode === "environment" && lensMode === "x0.5"
-      ? "none"
-      : lensMode === "x2"
-      ? 2
-      : 1;
+    return lensMode === "x0.5" ? "none" : lensMode === "x2" ? 2 : 1;
   };
 
   return (
@@ -73,11 +69,15 @@ export const Camera = () => {
         />
       </div>
 
-      <h1 className="text-center text-white">{cameraOpen}</h1>
+      {cameraOpen === "" ? (
+        ""
+      ) : (
+        <h1 className="text-center text-white">{cameraOpen}</h1>
+      )}
 
       <Loading loading={isLoading} />
 
-      <div className="flex flex-col gap-4 justify-between items-center h-2/3">
+      <div className="flex flex-col gap-4 justify-between items-center">
         <video
           ref={videoRef}
           autoPlay
