@@ -50,11 +50,11 @@ export const Camera = () => {
   }, [facingMode, lensMode]);
 
   const getLensMode = () => {
-    return lensMode === "x0.5" ? 0.5 : lensMode === "x2" ? 2 : 1;
+    return lensMode === "x0.5" ? "none" : lensMode === "x2" ? 2 : 1;
   };
 
   return (
-    <div className="flex mt-10 items-center flex-col gap-4 w-[80%] m-auto h-screen">
+    <div className="flex mt-10 items-center flex-col gap-4 w-[80%] m-auto">
       <div className="flex justify-end items-end w-full">
         <IconButton
           icon={<PiCameraRotate className="text-2xl" />}
@@ -78,7 +78,7 @@ export const Camera = () => {
             isLoading ? "scale-0" : "scale-100 duration-300 ease-linear"
           }`}></video>
 
-        <div className="w-full flex flex-col justify-center items-center gap-4">
+        <div className="w-full flex flex-col justify-center items-center gap-4 fixed bottom-[40px]">
           <div className="flex gap-4 justify-center items-center">
             <Button
               onClick={() =>
