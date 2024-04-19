@@ -2,6 +2,7 @@ import {
   IToggleCamera,
   IDiscardPhoto,
   ITakePhoto,
+  IChangeLensMode,
 } from "../interfaces/actions";
 
 const takePhoto = ({
@@ -81,4 +82,20 @@ const discardPhoto = ({ setPhoto, setVideoDimensions }: IDiscardPhoto) => {
   });
 };
 
-export { takePhoto, toggleCamera, downloadPhoto, discardPhoto };
+const changeLensMode = ({ lensMode, setLensMode }: IChangeLensMode) => {
+  let newLensMode = "none"; // Default to x1 lens mode
+  switch (lensMode) {
+    case "x0.5":
+      newLensMode = "none";
+      break;
+    case "x1":
+      newLensMode = "x2";
+      break;
+    default:
+      newLensMode = "none";
+      break;
+  }
+  setLensMode(newLensMode);
+};
+
+export { takePhoto, toggleCamera, downloadPhoto, discardPhoto, changeLensMode };

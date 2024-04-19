@@ -3,6 +3,7 @@ import {
   toggleCamera,
   downloadPhoto,
   discardPhoto,
+  changeLensMode,
 } from "./CameraActions";
 
 const camera = {
@@ -10,6 +11,7 @@ const camera = {
   toggleCamera,
   downloadPhoto,
   discardPhoto,
+  changeLensMode,
 };
 
 export { camera };
