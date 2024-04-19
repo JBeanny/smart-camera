@@ -49,13 +49,10 @@ export const Camera = () => {
     let newLensMode = "none"; // Default to x1 lens mode
     switch (lens) {
       case "x0.5":
-        newLensMode = "x0.5";
+        newLensMode = "none";
         break;
-      case "x2":
+      case "x1":
         newLensMode = "x2";
-        break;
-      case "none":
-        newLensMode = "none"; // Cycle back to x1 lens mode
         break;
       default:
         newLensMode = "none";
@@ -79,14 +76,9 @@ export const Camera = () => {
           0.5
         </button>
         <button
-          onClick={() => changeLensMode("none")}
+          onClick={() => changeLensMode("x1")}
           className="bg-white text-gray p-2 rounded-full w-[40px] h-[40px] text-sm active:scale-110">
           1
-        </button>
-        <button
-          onClick={() => changeLensMode("x2")}
-          className="bg-white text-gray p-2 rounded-full w-[40px] h-[40px] text-sm active:scale-110">
-          2
         </button>
       </div>
 
