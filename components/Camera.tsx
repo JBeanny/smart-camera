@@ -24,7 +24,9 @@ export const Camera = () => {
       const constraints = {
         video: {
           facingMode: facingMode,
-          resizeMode: lensMode,
+          zoom: {
+            ideal: lensMode === "x0.5" ? 0.5 : lensMode === "x2" ? 2 : 1,
+          },
         },
       };
 
