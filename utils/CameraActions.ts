@@ -64,11 +64,14 @@ const toggleCamera = ({
   videoStream,
   setFacingMode,
   facingMode,
+  setLensMode,
 }: IToggleCamera) => {
   if (videoStream == null) return;
 
   // Stop current video stream
   videoStream.getTracks().forEach((track) => track.stop());
+
+  setLensMode("none");
 
   // Toggle facing mode
   setFacingMode(facingMode === "user" ? "environment" : "user");

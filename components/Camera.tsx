@@ -63,7 +63,12 @@ export const Camera = () => {
         <IconButton
           icon={<PiCameraRotate className="text-2xl" />}
           onClick={() =>
-            camera.toggleCamera({ videoStream, setFacingMode, facingMode })
+            camera.toggleCamera({
+              videoStream,
+              setFacingMode,
+              facingMode,
+              setLensMode,
+            })
           }
         />
       </div>
