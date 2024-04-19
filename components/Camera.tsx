@@ -36,7 +36,7 @@ export const Camera = () => {
         video: {
           facingMode: facingMode,
           zoom: {
-            ideal: "none",
+            ideal: 1,
           },
         },
       };
