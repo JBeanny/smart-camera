@@ -1,16 +1,17 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Button } from "../components";
+import { Button, CustomDialog, Loading, IconButton } from "../components";
 import { camera } from "@/utils";
-import { CustomDialog } from "./Dialog";
 import { PiCameraRotate } from "react-icons/pi";
+import { SlCamera } from "react-icons/sl";
 
 export const Camera = () => {
   const [photo, setPhoto] = useState(null);
   const [videoStream, setVideoStream] = useState<MediaStream | null>(null);
   const [facingMode, setFacingMode] = useState("user");
-  const [lensMode, setLensMode] = useState<string>("x2");
+  const [lensMode, setLensMode] = useState<string>("none");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [videoDimensions, setVideoDimensions] = useState({
     width: "auto",
     height: "auto",
@@ -40,6 +41,7 @@ export const Camera = () => {
           videoRef.current.srcObject = stream;
           setVideoStream(stream);
           setCameraOpen("Enjoy taking photos 😊");
+          setIsLoading(false);
         })
         .catch(function (err) {
           console.log("An error occurred: " + err);
@@ -54,57 +56,67 @@ export const Camera = () => {
   return (
     <div className="flex mt-10 items-center flex-col gap-4 w-[80%] m-auto h-screen">
       <div className="flex justify-end items-end w-full">
-        <button
+        <IconButton
+          icon={<PiCameraRotate className="text-2xl" />}
           onClick={() =>
             camera.toggleCamera({ videoStream, setFacingMode, facingMode })
           }
-          className="bg-white text-gray active:scale-110 rounded-full w-[40px] h-[40px] flex justify-center items-center">
-          <PiCameraRotate className="text-2xl" />
-        </button>
+        />
       </div>
 
       <h1 className="text-center text-white">{cameraOpen}</h1>
-      <video
-        ref={videoRef}
-        autoPlay
-        className={`w-${videoDimensions.width} h-${videoDimensions.height} rounded-lg object-cover`}></video>
 
-      <div className="flex gap-4 justify-center items-center">
-        <Button
-          onClick={() =>
-            camera.changeLensMode({ lensMode: "x0.5", setLensMode })
-          }
-          className={`bg-white text-gray p-2 rounded-full w-[40px] h-[40px] text-sm active:scale-110 ${
-            lensMode === "none"
-              ? "ring-[1px] ring-offset-2 ring-offset-zinc ring-white"
-              : ""
-          }`}
-          text="0.5"
-        />
-        <Button
-          onClick={() => camera.changeLensMode({ lensMode: "x1", setLensMode })}
-          className={`bg-white text-gray p-2 rounded-full w-[40px] h-[40px] text-sm active:scale-110 ${
-            lensMode === "x2"
-              ? "ring-[1px] ring-offset-2 ring-offset-zinc ring-white"
-              : ""
-          }`}
-          text="1"
-        />
-      </div>
+      <Loading loading={isLoading} />
 
-      <div className="w-full flex flex-col justify-between gap-4">
-        <Button
-          onClick={() =>
-            camera.takePhoto({
-              videoRef,
-              canvasRef,
-              setPhoto,
-              setVideoDimensions,
-            })
-          }
-          className="bg-white text-gray active:scale-110 rounded-lg"
-          text="Take Photo 📸"
-        />
+      <div className="flex flex-col gap-4 justify-between items-center mt-20 h-2/3">
+        <video
+          ref={videoRef}
+          autoPlay
+          className={`w-${videoDimensions.width} h-${
+            videoDimensions.height
+          } rounded-lg object-cover ${
+            isLoading ? "scale-0" : "scale-100 duration-300 ease-linear"
+          }`}></video>
+
+        <div className="w-full flex flex-col justify-center items-center gap-4">
+          <div className="flex gap-4 justify-center items-center">
+            <Button
+              onClick={() =>
+                camera.changeLensMode({ lensMode: "x0.5", setLensMode })
+              }
+              className={`bg-white text-gray p-2 rounded-full w-[40px] h-[40px] text-sm active:scale-110 ${
+                lensMode === "none"
+                  ? "ring-[1px] ring-offset-2 ring-offset-zinc ring-white"
+                  : ""
+              }`}
+              text="0.5"
+            />
+            <Button
+              onClick={() =>
+                camera.changeLensMode({ lensMode: "x1", setLensMode })
+              }
+              className={`bg-white text-gray p-2 rounded-full w-[40px] h-[40px] text-sm active:scale-110 ${
+                lensMode === "x2"
+                  ? "ring-[1px] ring-offset-2 ring-offset-zinc ring-white"
+                  : ""
+              }`}
+              text="1"
+            />
+          </div>
+
+          <IconButton
+            icon={<SlCamera className="text-3xl" />}
+            onClick={() =>
+              camera.takePhoto({
+                videoRef,
+                canvasRef,
+                setPhoto,
+                setVideoDimensions,
+              })
+            }
+            className="w-[80px] h-[80px] ring-[1px] ring-offset-2 ring-offset-zinc ring-white"
+          />
+        </div>
       </div>
 
       {/* image preview */}
