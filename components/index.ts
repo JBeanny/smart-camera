@@ -1,4 +1,7 @@
 import { Button } from "./Button";
 import { Camera } from "./Camera";
+import { Loading } from "./Loading";
+import { CustomDialog } from "./Dialog";
+import { IconButton } from "./IconButton";
 
-export { Button, Camera };
+export { Button, Camera, Loading, CustomDialog, IconButton };
