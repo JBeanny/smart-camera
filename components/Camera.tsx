@@ -24,14 +24,21 @@ export const Camera = () => {
 
   useEffect(() => {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      const constraints = {
-        video: {
-          facingMode: facingMode,
-          zoom: {
-            ideal: getLensMode(),
-          },
-        },
-      };
+      const constraints =
+        facingMode === "environment"
+          ? {
+              video: {
+                facingMode: facingMode,
+                zoom: {
+                  ideal: getLensMode(),
+                },
+              },
+            }
+          : {
+              video: {
+                facingMode: facingMode,
+              },
+            };
 
       navigator.mediaDevices
         .getUserMedia(constraints)
@@ -50,7 +57,7 @@ export const Camera = () => {
   }, [facingMode, lensMode]);
 
   const getLensMode = () => {
-    return lensMode === "x0.5" ? "none" : lensMode === "x2" ? 2 : 1;
+    return lensMode === "x0.5" ? 0.5 : 2;
   };
 
   return (
