@@ -118,7 +118,6 @@ export const Camera = () => {
               onClick={() =>
                 camera.toggleCamera({
                   videoStream,
-                  setVideoStream,
                   setFacingMode,
                   facingMode,
                   setLensMode,
