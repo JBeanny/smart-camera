@@ -10,7 +10,7 @@ export const Camera = () => {
   const [photo, setPhoto] = useState(null);
   const [videoStream, setVideoStream] = useState<MediaStream | null>(null);
   const [facingMode, setFacingMode] = useState("user");
-  const [lensMode, setLensMode] = useState<string>("none");
+  const [lensMode, setLensMode] = useState<string>("x1");
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [videoDimensions, setVideoDimensions] = useState({
     width: "auto",
@@ -50,25 +50,11 @@ export const Camera = () => {
   }, [facingMode, lensMode]);
 
   const getLensMode = () => {
-    return lensMode === "x0.5" ? "none" : lensMode === "x2" ? 2 : 1;
+    return lensMode === "x0.5" ? 0.5 : lensMode === "x2" ? 2 : 1;
   };
 
   return (
-    <div className="flex mt-10 items-center flex-col gap-4 w-[80%] m-auto">
-      <div className="flex justify-end items-end w-full">
-        <IconButton
-          icon={<PiCameraRotate className="text-2xl" />}
-          onClick={() =>
-            camera.toggleCamera({
-              videoStream,
-              setFacingMode,
-              facingMode,
-              setLensMode,
-            })
-          }
-        />
-      </div>
-
+    <div className="flex items-center flex-col gap-4 w-[80%] m-auto">
       {cameraOpen === "" ? (
         ""
       ) : (
@@ -87,7 +73,7 @@ export const Camera = () => {
             isLoading ? "scale-0" : "scale-100 duration-300 ease-linear"
           }`}></video>
 
-        <div className="w-full flex flex-col justify-center items-center gap-4 fixed bottom-[30px]">
+        <div className="w-full flex flex-col justify-center items-center gap-4 fixed bottom-[20px]">
           <div className="flex gap-4 justify-center items-center">
             <Button
               onClick={() =>
@@ -113,18 +99,33 @@ export const Camera = () => {
             />
           </div>
 
-          <IconButton
-            icon={<SlCamera className="text-3xl" />}
-            onClick={() =>
-              camera.takePhoto({
-                videoRef,
-                canvasRef,
-                setPhoto,
-                setVideoDimensions,
-              })
-            }
-            className="w-[80px] h-[80px] ring-[1px] ring-offset-2 ring-offset-zinc ring-white"
-          />
+          <div className="flex justify-center items-end">
+            <IconButton
+              icon={<SlCamera className="text-3xl" />}
+              onClick={() =>
+                camera.takePhoto({
+                  videoRef,
+                  canvasRef,
+                  setPhoto,
+                  setVideoDimensions,
+                })
+              }
+              className="w-[80px] h-[80px] ring-[1px] ring-offset-2 ring-offset-zinc ring-white"
+            />
+
+            <IconButton
+              icon={<PiCameraRotate className="text-2xl" />}
+              onClick={() =>
+                camera.toggleCamera({
+                  videoStream,
+                  setFacingMode,
+                  facingMode,
+                  setLensMode,
+                })
+              }
+              className="absolute right-[30px] ring-[1px] ring-offset-2 ring-offset-zinc ring-white"
+            />
+          </div>
         </div>
       </div>
 
