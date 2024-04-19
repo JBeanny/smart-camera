@@ -3,8 +3,14 @@ import HashLoader from "react-spinners/HashLoader";
 
 const override: CSSProperties = {
   display: "block",
-  margin: "0 auto",
   borderColor: "red",
+  position: "absolute",
+  width: "100px",
+  height: "100px",
+  left: "50%",
+  bottom: "50%",
+  marginBottom: "-50px",
+  marginLeft: "-50px",
 };
 
 export const Loading = ({ loading }: { loading: boolean }) => {
