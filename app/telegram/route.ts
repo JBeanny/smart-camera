@@ -28,10 +28,7 @@ export async function POST(req: NextRequest, res: any) {
     }
 
     // Create the directory if it doesn't exist
-    const uploadDir = "./public/uploads";
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
-    }
+    const uploadDir = "./public";
 
     // Read file contents as a Buffer
     const fileBuffer = await file.arrayBuffer();
