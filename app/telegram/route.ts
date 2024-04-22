@@ -27,17 +27,11 @@ export async function POST(req: NextRequest, res: any) {
       return new Response(JSON.stringify(response));
     }
 
-    // Create the directory if it doesn't exist
-    const uploadDir = "./public";
-
     // Read file contents as a Buffer
     const fileBuffer = await file.arrayBuffer();
-    // Save the file to the server
-    const filePath = `${uploadDir}/${file.name}`;
-    fs.writeFileSync(filePath, Buffer.from(fileBuffer));
 
     return bot
-      .sendPhoto(chatId, filePath)
+      .sendPhoto(chatId, Buffer.from(fileBuffer))
       .then(() => {
         // File upload successful
         const response = {

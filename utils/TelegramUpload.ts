@@ -27,7 +27,7 @@ export const sendPhotoToTelegram = async (
     setIsLoading(false);
 
     // Handle success
-    if (response.status === 200) {
+    if (response.data?.status === 200) {
       return;
     }
 
