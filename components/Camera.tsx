@@ -72,8 +72,7 @@ export const Camera = () => {
             videoDimensions.height
           } rounded-lg object-cover ${
             isLoading ? "scale-0" : "scale-100 duration-300 ease-linear"
-          }`}
-        ></video>
+          }`}></video>
 
         <div className="w-full flex flex-col justify-center items-center gap-4 fixed bottom-[20px]">
           <div className="flex gap-4 justify-center items-center">

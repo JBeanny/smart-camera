@@ -39,8 +39,7 @@ export const CustomDialog = ({
                 enterTo="opacity-100 scale-100"
                 leave="ease-in duration-200"
                 leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
+                leaveTo="opacity-0 scale-95">
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <div className="mt-2">
                     {photo && (
@@ -55,12 +54,12 @@ export const CustomDialog = ({
                   <div className="mt-4 flex flex-col gap-2">
                     <Button
                       onClick={() => {
-                        camera.downloadPhoto({ photo: blob });
+                        camera.downloadPhoto({ photo: blob, setPhoto });
                         toggleModal();
                       }}
                       disable={!photo}
                       className="inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-md hover:bg-green/80 bg-green text-white active:scale-110"
-                      text="Download Photo"
+                      text="Send to Telegram"
                     />
                     <Button
                       onClick={() => {
