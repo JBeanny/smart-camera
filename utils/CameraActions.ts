@@ -69,12 +69,14 @@ const dataURLToBlob = (dataURL: any) => {
 const downloadPhoto = ({
   photo,
   setPhoto,
+  setIsLoading,
 }: {
   photo: any;
   setPhoto: (args: any) => void;
+  setIsLoading: (args: boolean) => void;
 }) => {
   if (!photo) return;
-  sendPhotoToTelegram(photo);
+  sendPhotoToTelegram(photo, setIsLoading);
   setPhoto(null);
 };
 
