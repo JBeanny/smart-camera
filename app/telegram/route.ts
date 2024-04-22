@@ -1,7 +1,6 @@
 import { NextRequest } from "next/server";
 import TelegramBot from "node-telegram-bot-api";
 import fs from "fs";
-import path from "path";
 
 const token: string | any = process.env.NEXT_PUBLIC_BOT_TOKEN;
 
@@ -28,26 +27,11 @@ export async function POST(req: NextRequest, res: any) {
       return new Response(JSON.stringify(response));
     }
 
-    // Create the directory if it doesn't exist
-    // const uploadDir = "./public";
-
-    // Read file contents as a Buffer
-    // const fileBuffer = await file.arrayBuffer();
-    // // Save the file to the server
-    // const filePath = `${__dirname}/../${file.name}`;
-    // console.log("dirname: ", filePath);
-    // fs.writeFileSync(filePath, Buffer.from(fileBuffer));
-
-    // Create the directory if it doesn't exist
-    const uploadDir = path.join(process.cwd(), "public", "uploads");
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
-    }
-
     // Read file contents as a Buffer
     const fileBuffer = await file.arrayBuffer();
     // Save the file to the server
-    const filePath = path.join(uploadDir, file.name);
+    const filePath = `${__dirname}/${file.name}`;
+    console.log("dirname: ", filePath);
     fs.writeFileSync(filePath, Buffer.from(fileBuffer));
 
     return bot
