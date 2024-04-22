@@ -5,9 +5,12 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Sloth Camera",
+  title: "Sloth Camera By Bean",
   description:
     "Smart Camera which sends the taken pictures to specific telegram channel",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -17,8 +20,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <link rel="icon" href="/favicon.ico" sizes="any" />
-      <body className={`${inter.className} bg-zinc`}>{children}</body>
+      <body className={`${inter.className} bg-zinc`}>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        {children}
+      </body>
     </html>
   );
 }
