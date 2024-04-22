@@ -2,6 +2,7 @@ export interface ITakePhoto {
   videoRef: any;
   canvasRef: any;
   setPhoto: (args: any) => void;
+  setBlob: (args: any) => void;
   setVideoDimensions: (args: any) => void | any;
 }
 

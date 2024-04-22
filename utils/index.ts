@@ -6,6 +6,8 @@ import {
   changeLensMode,
 } from "./CameraActions";
 
+import { sendPhotoToTelegram } from "./TelegramUpload";
+
 const camera = {
   takePhoto,
   toggleCamera,
@@ -14,4 +16,4 @@ const camera = {
   changeLensMode,
 };
 
-export { camera };
+export { camera, sendPhotoToTelegram };
