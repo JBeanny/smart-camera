@@ -1,10 +1,18 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Button, CustomDialog, Loading, IconButton } from "../components";
+import {
+  Button,
+  CustomDialog,
+  Loading,
+  IconButton,
+  ClipLoading,
+} from "../components";
 import { camera } from "@/utils";
 import { PiCameraRotate } from "react-icons/pi";
 import { SlCamera } from "react-icons/sl";
+import { Flip, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Camera = () => {
   const [photo, setPhoto] = useState(null);
@@ -13,6 +21,7 @@ export const Camera = () => {
   const [facingMode, setFacingMode] = useState<string>("user");
   const [lensMode, setLensMode] = useState<string>("none");
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isSendingPhoto, setIsSendingPhoto] = useState<boolean>(false);
   const [videoDimensions, setVideoDimensions] = useState<object | any>({
     width: "auto",
     height: "auto",
@@ -56,11 +65,26 @@ export const Camera = () => {
 
   return (
     <div className="flex items-center flex-col gap-4 w-[80%] m-auto">
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        theme="dark"
+        transition={Flip}
+      />
+
       {cameraOpen === "" ? (
         ""
       ) : (
         <h1 className="text-center text-white">{cameraOpen}</h1>
       )}
+
+      <ClipLoading loading={isSendingPhoto} />
 
       <Loading loading={isLoading} />
 
@@ -140,6 +164,7 @@ export const Camera = () => {
           height={videoDimensions.height}
           setPhoto={setPhoto}
           setVideoDimensions={setVideoDimensions}
+          setIsLoading={setIsSendingPhoto}
         />
       )}
 

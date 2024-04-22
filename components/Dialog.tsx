@@ -10,6 +10,7 @@ interface IImagePreview {
   height: string;
   setPhoto: (args: any) => void;
   setVideoDimensions: (args: any) => void;
+  setIsLoading: (args: boolean) => void;
 }
 
 export const CustomDialog = ({
@@ -19,6 +20,7 @@ export const CustomDialog = ({
   height,
   setPhoto,
   setVideoDimensions,
+  setIsLoading,
 }: IImagePreview) => {
   let [isOpen, setIsOpen] = useState<boolean>(true);
 
@@ -54,7 +56,11 @@ export const CustomDialog = ({
                   <div className="mt-4 flex flex-col gap-2">
                     <Button
                       onClick={() => {
-                        camera.downloadPhoto({ photo: blob, setPhoto });
+                        camera.downloadPhoto({
+                          photo: blob,
+                          setPhoto,
+                          setIsLoading,
+                        });
                         toggleModal();
                       }}
                       disable={!photo}
