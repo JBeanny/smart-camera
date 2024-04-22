@@ -29,13 +29,9 @@ export async function POST(req: NextRequest, res: any) {
 
     // Read file contents as a Buffer
     const fileBuffer = await file.arrayBuffer();
-    // Save the file to the server
-    const filePath = `${__dirname}/${file.name}`;
-    console.log("dirname: ", filePath);
-    fs.writeFileSync(filePath, Buffer.from(fileBuffer));
 
     return bot
-      .sendPhoto(chatId, filePath)
+      .sendPhoto(chatId, Buffer.from(fileBuffer))
       .then(() => {
         // File upload successful
         const response = {
