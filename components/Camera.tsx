@@ -8,19 +8,20 @@ import { SlCamera } from "react-icons/sl";
 
 export const Camera = () => {
   const [photo, setPhoto] = useState(null);
+  const [blob, setBlob] = useState<Blob>(new Blob());
   const [videoStream, setVideoStream] = useState<MediaStream | null>(null);
-  const [facingMode, setFacingMode] = useState("user");
-  const [lensMode, setLensMode] = useState<string>("x1");
+  const [facingMode, setFacingMode] = useState<string>("user");
+  const [lensMode, setLensMode] = useState<string>("none");
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [videoDimensions, setVideoDimensions] = useState({
+  const [videoDimensions, setVideoDimensions] = useState<object | any>({
     width: "auto",
     height: "auto",
   });
-  const [cameraOpen, setCameraOpen] = useState(
+  const [cameraOpen, setCameraOpen] = useState<string>(
     "Camera is not accessible. Please enable or wait 😕"
   );
-  const videoRef = useRef<HTMLVideoElement | any>();
-  const canvasRef = useRef<HTMLCanvasElement | any>();
+  const videoRef = useRef<HTMLVideoElement | any>(null);
+  const canvasRef = useRef<HTMLCanvasElement | any>(null);
 
   useEffect(() => {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -107,6 +108,7 @@ export const Camera = () => {
                   videoRef,
                   canvasRef,
                   setPhoto,
+                  setBlob,
                   setVideoDimensions,
                 })
               }
@@ -133,6 +135,7 @@ export const Camera = () => {
       {photo && (
         <CustomDialog
           photo={photo}
+          blob={blob}
           width={videoDimensions.width}
           height={videoDimensions.height}
           setPhoto={setPhoto}

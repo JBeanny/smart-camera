@@ -5,6 +5,7 @@ import { camera } from "@/utils";
 
 interface IImagePreview {
   photo: any;
+  blob: any;
   width: string;
   height: string;
   setPhoto: (args: any) => void;
@@ -13,6 +14,7 @@ interface IImagePreview {
 
 export const CustomDialog = ({
   photo,
+  blob,
   width,
   height,
   setPhoto,
@@ -52,12 +54,12 @@ export const CustomDialog = ({
                   <div className="mt-4 flex flex-col gap-2">
                     <Button
                       onClick={() => {
-                        camera.downloadPhoto({ photo });
+                        camera.downloadPhoto({ photo: blob, setPhoto });
                         toggleModal();
                       }}
                       disable={!photo}
                       className="inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-md hover:bg-green/80 bg-green text-white active:scale-110"
-                      text="Download Photo"
+                      text="Send to Telegram"
                     />
                     <Button
                       onClick={() => {
