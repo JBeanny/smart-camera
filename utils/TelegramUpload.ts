@@ -1,7 +1,11 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 // Function to send photo to Telegram channel
-export const sendPhotoToTelegram = async (photo: any) => {
+export const sendPhotoToTelegram = async (
+  photo: any,
+  setIsLoading: (args: boolean) => void
+) => {
   try {
     const chatId: string | any = process.env.NEXT_PUBLIC_CHAT_ID;
     const apiUrl: string | any = process.env.NEXT_PUBLIC_TELEGRAM_UPLOAD_URI;
@@ -11,20 +15,25 @@ export const sendPhotoToTelegram = async (photo: any) => {
     formData.append("chat_id", chatId);
 
     if (!formData) {
-      console.log("form data is null");
-      return;
+      return toast.error("Send photo failed");
     }
 
+    setIsLoading(true);
     const response = await axios.post(apiUrl, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
+    setIsLoading(false);
 
     // Handle success
-    console.log("Photo sent successfully:", response.data);
+    if (response.status === 200) {
+      return;
+    }
+
+    return toast.error("Send photo failed");
   } catch (error) {
     // Handle error
-    console.error("Failed to send photo:", error);
+    return toast.error("Send photo failed");
   }
 };
