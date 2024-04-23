@@ -138,7 +138,7 @@ export const Camera = () => {
                 });
                 setIsDialogOpen(true);
               }}
-              className="w-[80px] h-[80px] ring-[1px] ring-offset-2 ring-offset-zinc ring-white"
+              className="w-[80px] h-[80px] ring-[1px] ring-offset-2 ring-offset-zinc ring-white bg-white"
             />
 
             <IconButton
@@ -151,7 +151,7 @@ export const Camera = () => {
                   setLensMode,
                 })
               }
-              className="absolute right-[30px] ring-[1px] ring-offset-2 ring-offset-zinc ring-white"
+              className="absolute right-[30px] ring-[1px] ring-offset-2 ring-offset-zinc ring-white bg-white"
             />
           </div>
         </div>

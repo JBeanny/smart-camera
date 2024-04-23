@@ -85,7 +85,7 @@ export const CustomDialog = ({
                       onClick={() => {
                         setIsAlertOpen(true);
                       }}
-                      className="w-[40px] h-[40px] bg-red active:scale-110"
+                      className="w-[50px] h-[50px] bg-red active:scale-110"
                     />
                     <IconButton
                       icon={<IoSendOutline className="text-2xl text-white" />}
@@ -97,7 +97,7 @@ export const CustomDialog = ({
                           setIsLoading,
                         });
                       }}
-                      className="w-[40px] h-[40px] bg-green/90 active:scale-110 flex justify-center items-center"
+                      className="w-[50px] h-[50px] bg-green/90 active:scale-110 flex justify-center items-center"
                     />
                   </div>
                 </Dialog.Panel>
