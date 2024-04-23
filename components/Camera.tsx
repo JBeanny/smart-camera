@@ -18,6 +18,7 @@ export const Camera = () => {
   const [photo, setPhoto] = useState(null);
   const [blob, setBlob] = useState<Blob>(new Blob());
   const [videoStream, setVideoStream] = useState<MediaStream | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [facingMode, setFacingMode] = useState<string>("user");
   const [lensMode, setLensMode] = useState<string>("none");
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -127,15 +128,16 @@ export const Camera = () => {
           <div className="flex justify-center items-end">
             <IconButton
               icon={<SlCamera className="text-3xl" />}
-              onClick={() =>
+              onClick={() => {
                 camera.takePhoto({
                   videoRef,
                   canvasRef,
                   setPhoto,
                   setBlob,
                   setVideoDimensions,
-                })
-              }
+                });
+                setIsDialogOpen(true);
+              }}
               className="w-[80px] h-[80px] ring-[1px] ring-offset-2 ring-offset-zinc ring-white"
             />
 
@@ -156,17 +158,17 @@ export const Camera = () => {
       </div>
 
       {/* image preview */}
-      {photo && (
-        <CustomDialog
-          photo={photo}
-          blob={blob}
-          width={videoDimensions.width}
-          height={videoDimensions.height}
-          setPhoto={setPhoto}
-          setVideoDimensions={setVideoDimensions}
-          setIsLoading={setIsSendingPhoto}
-        />
-      )}
+      <CustomDialog
+        isOpen={isDialogOpen}
+        setIsOpen={setIsDialogOpen}
+        photo={photo}
+        blob={blob}
+        width={videoDimensions.width}
+        height={videoDimensions.height}
+        setPhoto={setPhoto}
+        setVideoDimensions={setVideoDimensions}
+        setIsLoading={setIsSendingPhoto}
+      />
 
       <canvas ref={canvasRef} style={{ display: "none" }}></canvas>
     </div>
